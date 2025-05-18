@@ -5,3 +5,4 @@
 [2025-05-10 13:14:00] Add random seeding to workload generation for reproducibility
 [2025-05-13 15:54:00] Refactor generate_workload to support variable arrival times
 [2025-05-15 13:51:00] Add priority field to Process class
+[2025-05-18 14:58:00] Implement Priority generation logic in workload
