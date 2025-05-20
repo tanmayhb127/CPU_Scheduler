@@ -6,3 +6,4 @@
 [2025-05-13 15:54:00] Refactor generate_workload to support variable arrival times
 [2025-05-15 13:51:00] Add priority field to Process class
 [2025-05-18 14:58:00] Implement Priority generation logic in workload
+[2025-05-20 16:19:00] Create CPUSimResult class to hold simulation metrics
