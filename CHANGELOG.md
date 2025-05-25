@@ -8,3 +8,4 @@
 [2025-05-18 14:58:00] Implement Priority generation logic in workload
 [2025-05-20 16:19:00] Create CPUSimResult class to hold simulation metrics
 [2025-05-23 12:19:00] Outline compute_metrics function signature
+[2025-05-25 17:13:00] Implement average waiting time calculation
