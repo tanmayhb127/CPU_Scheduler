@@ -11,3 +11,4 @@
 [2025-05-25 17:13:00] Implement average waiting time calculation
 [2025-05-27 10:14:00] Add average turnaround time calculation
 [2025-05-30 11:20:00] Add response time metric to compute_metrics
+[2025-06-01 15:50:00] Implement deadline miss rate calculation
