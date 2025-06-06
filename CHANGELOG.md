@@ -13,3 +13,4 @@
 [2025-05-30 11:20:00] Add response time metric to compute_metrics
 [2025-06-01 15:50:00] Implement deadline miss rate calculation
 [2025-06-04 13:34:00] Fix division by zero bug in metrics when n=0
+[2025-06-06 14:33:00] Define pick_srtf heuristic function
