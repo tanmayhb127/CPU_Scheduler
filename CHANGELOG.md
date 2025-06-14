@@ -16,3 +16,4 @@
 [2025-06-06 14:33:00] Define pick_srtf heuristic function
 [2025-06-09 10:12:00] Implement Shortest Remaining Time First logic
 [2025-06-11 17:01:00] Define pick_sjf heuristic function
+[2025-06-14 13:49:00] Implement Shortest Job First logic
