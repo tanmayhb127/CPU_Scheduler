@@ -19,3 +19,4 @@
 [2025-06-14 13:49:00] Implement Shortest Job First logic
 [2025-06-16 13:36:00] Define pick_priority heuristic function
 [2025-06-18 17:26:00] Implement Priority scheduling logic
+[2025-06-21 16:16:00] Define pick_rr for Round Robin scheduling
