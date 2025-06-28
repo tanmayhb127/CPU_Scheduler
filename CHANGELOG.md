@@ -22,3 +22,4 @@
 [2025-06-21 16:16:00] Define pick_rr for Round Robin scheduling
 [2025-06-23 17:03:00] Implement Round Robin cyclic selection with modulus
 [2025-06-26 14:21:00] Create main simulation loop skeleton in simulate()
+[2025-06-28 10:35:00] Implement arrival handling in simulation loop
