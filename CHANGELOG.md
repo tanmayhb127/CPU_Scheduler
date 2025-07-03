@@ -24,3 +24,4 @@
 [2025-06-26 14:21:00] Create main simulation loop skeleton in simulate()
 [2025-06-28 10:35:00] Implement arrival handling in simulation loop
 [2025-07-01 10:37:00] Add ready queue management logic
+[2025-07-03 10:44:00] Implement context switching logic and overhead placeholders
