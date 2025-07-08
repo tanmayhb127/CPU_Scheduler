@@ -26,3 +26,4 @@
 [2025-07-01 10:37:00] Add ready queue management logic
 [2025-07-03 10:44:00] Implement context switching logic and overhead placeholders
 [2025-07-06 13:23:00] Integrate pick_srtf into simulation loop
+[2025-07-08 09:16:00] Integrate pick_sjf into simulation loop
