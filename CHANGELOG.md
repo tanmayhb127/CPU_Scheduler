@@ -28,3 +28,4 @@
 [2025-07-06 13:23:00] Integrate pick_srtf into simulation loop
 [2025-07-08 09:16:00] Integrate pick_sjf into simulation loop
 [2025-07-11 10:51:00] Integrate pick_priority into simulation loop
+[2025-07-13 17:21:00] Integrate pick_rr into simulation loop with quantum
