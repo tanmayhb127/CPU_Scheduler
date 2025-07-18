@@ -30,3 +30,4 @@
 [2025-07-11 10:51:00] Integrate pick_priority into simulation loop
 [2025-07-13 17:21:00] Integrate pick_rr into simulation loop with quantum
 [2025-07-15 15:56:00] Implement time quantum expiration for RR
+[2025-07-18 14:30:00] Add process completion handling and timeline recording
