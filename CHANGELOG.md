@@ -32,3 +32,4 @@
 [2025-07-15 15:56:00] Implement time quantum expiration for RR
 [2025-07-18 14:30:00] Add process completion handling and timeline recording
 [2025-07-20 11:36:00] Fix bug in waiting time calculation for preempted processes
+[2025-07-23 15:57:00] Optimize simulation loop for performance
