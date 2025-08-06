@@ -38,3 +38,4 @@
 [2025-07-30 14:07:00] Implement build_dataset function for training data
 [2025-08-02 14:15:00] Add oracle policy selector (SRTF/SJF/Priority) for labeling
 [2025-08-04 09:41:00] Generate feature vectors for training examples
+[2025-08-06 14:11:00] Include queue length and wait time in state features
