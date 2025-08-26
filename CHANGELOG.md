@@ -46,3 +46,4 @@
 [2025-08-19 16:04:00] Tune Random Forest hyperparameters (n_estimators=300)
 [2025-08-21 13:52:00] Verify model accuracy on test set
 [2025-08-24 16:40:00] Create run_learned_scheduler.py for inference testing
+[2025-08-26 12:37:00] Implement pick_with_model inference wrapper
