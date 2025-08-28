@@ -47,3 +47,4 @@
 [2025-08-21 13:52:00] Verify model accuracy on test set
 [2025-08-24 16:40:00] Create run_learned_scheduler.py for inference testing
 [2025-08-26 12:37:00] Implement pick_with_model inference wrapper
+[2025-08-28 12:58:00] Implement simulate_learned loop using trained model
