@@ -50,3 +50,4 @@
 [2025-08-28 12:58:00] Implement simulate_learned loop using trained model
 [2025-08-31 11:02:00] Add pandas DataFrame conversion for single-step inference
 [2025-09-02 11:55:00] Integrate learned model with simulation environment
+[2025-09-05 10:15:00] Compare learned model against heuristics in main script
