@@ -53,3 +53,4 @@
 [2025-09-05 10:15:00] Compare learned model against heuristics in main script
 [2025-09-07 15:26:00] Start development of FastAPI backend in app.py
 [2025-09-10 17:30:00] Setup FastAPI app and CORS middleware
+[2025-09-12 11:19:00] Implement root endpoint to serve frontend
