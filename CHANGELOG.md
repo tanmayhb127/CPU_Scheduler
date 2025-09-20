@@ -56,3 +56,4 @@
 [2025-09-12 11:19:00] Implement root endpoint to serve frontend
 [2025-09-15 10:56:00] Create /api/generate endpoint for workload creation
 [2025-09-17 14:42:00] Add form parameters for n and seed in generate
+[2025-09-20 11:17:00] Implement JSON loading for /api/upload
