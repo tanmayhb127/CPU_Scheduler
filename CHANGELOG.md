@@ -58,3 +58,4 @@
 [2025-09-17 14:42:00] Add form parameters for n and seed in generate
 [2025-09-20 11:17:00] Implement JSON loading for /api/upload
 [2025-09-22 13:11:00] Add CSV parsing support for /api/upload
+[2025-09-24 10:26:00] Refactor api_upload to handle optional priority columns
