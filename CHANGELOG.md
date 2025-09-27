@@ -59,3 +59,4 @@
 [2025-09-20 11:17:00] Implement JSON loading for /api/upload
 [2025-09-22 13:11:00] Add CSV parsing support for /api/upload
 [2025-09-24 10:26:00] Refactor api_upload to handle optional priority columns
+[2025-09-27 10:21:00] Create run_model_scheduler wrapper in app.py
