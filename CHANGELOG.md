@@ -61,3 +61,4 @@
 [2025-09-24 10:26:00] Refactor api_upload to handle optional priority columns
 [2025-09-27 10:21:00] Create run_model_scheduler wrapper in app.py
 [2025-09-29 15:29:00] Implement /api/simulate endpoint
+[2025-10-02 14:37:00] Add payload validation for simulate endpoint
