@@ -62,3 +62,4 @@
 [2025-09-27 10:21:00] Create run_model_scheduler wrapper in app.py
 [2025-09-29 15:29:00] Implement /api/simulate endpoint
 [2025-10-02 14:37:00] Add payload validation for simulate endpoint
+[2025-10-04 16:05:00] Connect SRFT/SJF/RR policies to api_simulate
