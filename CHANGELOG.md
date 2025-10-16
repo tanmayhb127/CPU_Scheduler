@@ -67,3 +67,4 @@
 [2025-10-09 10:22:00] Handle missing model error in api_simulate
 [2025-10-12 11:25:00] Add /api/modelinfo endpoint for frontend checks
 [2025-10-14 16:52:00] Optimize JSON response structure for timeline visualization
+[2025-10-16 17:50:00] Draft frontend/index.html structure
