@@ -69,3 +69,4 @@
 [2025-10-14 16:52:00] Optimize JSON response structure for timeline visualization
 [2025-10-16 17:50:00] Draft frontend/index.html structure
 [2025-10-19 15:39:00] Add chart.js integration for timeline visualization
+[2025-10-21 13:58:00] Implement fetch logic for /api/simulate
