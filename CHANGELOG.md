@@ -70,3 +70,4 @@
 [2025-10-16 17:50:00] Draft frontend/index.html structure
 [2025-10-19 15:39:00] Add chart.js integration for timeline visualization
 [2025-10-21 13:58:00] Implement fetch logic for /api/simulate
+[2025-10-24 15:32:00] Add file upload UI and event handlers
