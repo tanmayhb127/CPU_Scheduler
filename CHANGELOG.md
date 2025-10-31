@@ -73,3 +73,4 @@
 [2025-10-24 15:32:00] Add file upload UI and event handlers
 [2025-10-26 15:29:00] Style improvements for scheduler dashboard
 [2025-10-29 14:57:00] Refactor cpu_env imports in app.py
+[2025-10-31 09:54:00] Clean up debug prints in simulation loop
