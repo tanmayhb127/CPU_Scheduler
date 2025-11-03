@@ -74,3 +74,4 @@
 [2025-10-26 15:29:00] Style improvements for scheduler dashboard
 [2025-10-29 14:57:00] Refactor cpu_env imports in app.py
 [2025-10-31 09:54:00] Clean up debug prints in simulation loop
+[2025-11-03 13:28:00] Update requirements.txt with scikit-learn and fastapi
