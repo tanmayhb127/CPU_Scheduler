@@ -75,3 +75,4 @@
 [2025-10-29 14:57:00] Refactor cpu_env imports in app.py
 [2025-10-31 09:54:00] Clean up debug prints in simulation loop
 [2025-11-03 13:28:00] Update requirements.txt with scikit-learn and fastapi
+[2025-11-05 11:49:00] Add comments explaining Process fields
