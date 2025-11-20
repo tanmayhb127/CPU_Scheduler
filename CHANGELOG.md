@@ -81,3 +81,4 @@
 [2025-11-12 10:58:00] Refactor metrics calculation for edge cases
 [2025-11-15 15:06:00] Ensure model path is configurable via env var
 [2025-11-17 09:27:00] Finalize api_simulate response format
+[2025-11-20 11:13:00] Add error handling for invalid policy names
