@@ -1,0 +1,216 @@
+<!-- frontend/index.html -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>AI CPU Scheduler Simulator</title>
+  <style>
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#0b1221;color:#e6eef8;margin:0;padding:0}
+    .wrap{max-width:1100px;margin:28px auto;padding:18px}
+    .card{background:#0f172a;border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.04)}
+    h1{margin:0 0 10px}
+    .row{display:flex;gap:12px;align-items:center}
+    textarea{width:100%;height:140px;background:#07102a;color:#e6eef8;border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,.04);resize:vertical}
+    input[type=number], select { padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:#07102a;color:#e6eef8 }
+    button{background:#4f46e5;color:white;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+    .muted{color:#9fb0ca;font-size:13px}
+    .timeline{margin-top:12px;padding:12px;background:#071022;border-radius:8px;overflow:auto}
+    .proc-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+    .proc-label{width:70px;font-size:13px;color:#9fb0ca}
+    .proc-bar{height:22px;border-radius:6px;background:#0b3b73;position:relative}
+    .tick{position:absolute;top:0;bottom:0;background:#60a5fa;border-radius:4px}
+    .idle{background:#102033}
+    .metrics{margin-top:12px;color:#9fb0ca}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .file-input{color:#9fb0ca}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>AI CPU Scheduler Simulator</h1>
+    <p class="muted">Upload a workload (JSON array or CSV) or generate one. Simulate baselines or the learned policy and visualize timeline.</p>
+
+    <div class="card" style="margin-top:12px">
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <div>
+          <label class="muted">Policy</label><br/>
+          <select id="policy">
+            <option value="srtf">SRTF (Shortest Remaining Time)</option>
+            <option value="sjf">SJF</option>
+            <option value="priority">Priority</option>
+            <option value="rr">Round Robin</option>
+            <option value="learned">Learned (imitation)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="muted">Time Quantum (RR)</label><br/>
+          <input id="q" type="number" value="2" min="1" style="width:80px"/>
+        </div>
+
+        <div>
+          <label class="muted">Generate N</label><br/>
+          <input id="genN" type="number" value="12" min="1" style="width:80px"/>
+        </div>
+
+        <div class="controls">
+          <button id="genBtn">Generate Workload</button>
+          <button id="simBtn">Simulate</button>
+          <label class="file-input">
+            <input id="file" type="file" style="display:none"/>
+            <button id="upBtn">Upload CSV/JSON</button>
+          </label>
+          <button id="clearBtn">Clear</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="muted">Workload (JSON array: <code>[{"pid":0,"arrival":0,"burst":5,"priority":0}, ...]</code>)</div>
+        <textarea id="workload">
+[
+  {"pid":0,"arrival":0,"burst":5,"priority":1},
+  {"pid":1,"arrival":2,"burst":3,"priority":2},
+  {"pid":2,"arrival":4,"burst":7,"priority":0},
+  {"pid":3,"arrival":5,"burst":2,"priority":4}
+]
+        </textarea>
+      </div>
+
+      <div class="timeline card" id="timeline" style="margin-top:10px">
+        <div class="muted">Timeline will appear here after simulation.</div>
+      </div>
+
+      <div class="metrics" id="metrics"></div>
+    </div>
+  </div>
+
+<script>
+const API_BASE = ''; // same origin; served by FastAPI
+
+function parseWorkloadText(txt) {
+  try {
+    const j = JSON.parse(txt);
+    if (Array.isArray(j)) return j;
+  } catch (e) {}
+  // not JSON -> try CSV simple parse
+  const rows = txt.trim().split(/\\n+/).map(r=>r.trim()).filter(Boolean);
+  if (rows.length <= 1) return [];
+  const hdr = rows[0].split(',').map(h=>h.trim());
+  return rows.slice(1).map(line => {
+    const cols = line.split(',').map(c=>c.trim());
+    const obj = {};
+    hdr.forEach((h,i)=> obj[h] = cols[i]);
+    return { pid: Number(obj.pid), arrival: Number(obj.arrival), burst: Number(obj.burst), priority: Number(obj.priority||0) };
+  });
+}
+
+document.getElementById('genBtn').onclick = async () => {
+  const n = Number(document.getElementById('genN').value||12);
+  const form = new FormData();
+  form.append('n', n);
+  form.append('seed', Math.floor(Math.random()*10000));
+  const res = await fetch('/api/generate', { method:'POST', body: form });
+  const j = await res.json();
+  document.getElementById('workload').value = JSON.stringify(j.workload, null, 2);
+}
+
+document.getElementById('file').addEventListener('change', async (ev) => {
+  const f = ev.target.files[0];
+  if (!f) return;
+  const fd = new FormData(); fd.append('file', f);
+  const res = await fetch('/api/upload', { method: 'POST', body: fd });
+  const j = await res.json();
+  document.getElementById('workload').value = JSON.stringify(j.workload, null, 2);
+});
+
+document.getElementById('upBtn').addEventListener('click', ()=> document.getElementById('file').click());
+
+document.getElementById('clearBtn').onclick = () => { document.getElementById('workload').value = ''; document.getElementById('timeline').innerHTML = '<div class="muted">Timeline will appear here after simulation.</div>'; document.getElementById('metrics').innerText = ''; }
+
+document.getElementById('simBtn').onclick = async () => {
+  const txt = document.getElementById('workload').value;
+  const wl = parseWorkloadText(txt);
+  if (!wl || wl.length===0) { alert('Invalid workload'); return; }
+  const policy = document.getElementById('policy').value;
+  const q = Number(document.getElementById('q').value||1);
+  const body = { workload: wl, policy: policy, time_quantum: q };
+  const res = await fetch('/api/simulate', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const j = await res.json();
+  if (j.error) { alert('Error: '+j.error); return; }
+  renderTimeline(j.timeline, j.procs);
+  document.getElementById('metrics').innerText = 'Metrics: ' + JSON.stringify(j.metrics);
+}
+
+function renderTimeline(timeline, procs) {
+  // Build per-pid intervals: group contiguous times for same pid
+  const pidMap = {};
+  procs.forEach(p => pidMap[p.pid] = { pid: p.pid, arrival: p.arrival, burst: p.burst });
+  const intervals = {}; // pid -> list of [start,end)
+  timeline.forEach(item => {
+    const t = item.t, pid = item.pid;
+    if (!(pid in intervals)) intervals[pid] = [];
+    const arr = intervals[pid];
+    if (arr.length === 0) arr.push([t, t+1]);
+    else {
+      const last = arr[arr.length-1];
+      if (last[1] === t) last[1] = t+1; else arr.push([t, t+1]);
+    }
+  });
+
+  // compute global max time
+  let maxT = 0;
+  timeline.forEach(it => { if (it.t > maxT) maxT = it.t; });
+  maxT += 1;
+
+  // Render rows: one row per pid (exclude -1 idle)
+  const pids = Object.keys(intervals).map(k=>Number(k)).filter(k=>k>=0).sort((a,b)=>a-b);
+  const container = document.getElementById('timeline');
+  container.innerHTML = '';
+  if (pids.length === 0) {
+    container.innerHTML = '<div class="muted">No process ran (empty timeline)</div>'; return;
+  }
+  pids.forEach(pid => {
+    const row = document.createElement('div'); row.className = 'proc-row';
+    const label = document.createElement('div'); label.className='proc-label'; label.innerText = 'PID ' + pid;
+    const barWrap = document.createElement('div'); barWrap.style.flex = '1';
+    const bar = document.createElement('div'); bar.className = 'proc-bar';
+    bar.style.position = 'relative';
+    bar.style.display = 'block';
+    bar.style.width = '100%';
+    bar.style.minWidth = '200px';
+    // place intervals as absolute children (percentage widths)
+    const iw = bar.getBoundingClientRect().width; // 0 at this time; we'll use percentages instead
+    const ints = intervals[pid] || [];
+    ints.forEach(it => {
+      const start = it[0], end = it[1];
+      const left = (start / maxT) * 100;
+      const width = ((end - start) / maxT) * 100;
+      const seg = document.createElement('div');
+      seg.style.position = 'absolute';
+      seg.style.left = left + '%';
+      seg.style.width = width + '%';
+      seg.style.top = '2px';
+      seg.style.bottom = '2px';
+      seg.style.borderRadius = '6px';
+      seg.style.background = `hsl(${(pid*53)%360} 70% 45%)`;
+      seg.title = `pid ${pid} [${start} - ${end})`;
+      bar.appendChild(seg);
+    });
+    barWrap.appendChild(bar);
+    row.appendChild(label);
+    row.appendChild(barWrap);
+    container.appendChild(row);
+  });
+
+  // Add a time ruler
+  const ruler = document.createElement('div'); ruler.style.marginTop='8px'; ruler.className='muted';
+  let ticks = '';
+  const step = Math.max(1, Math.ceil(maxT / 10));
+  for (let t=0;t<=maxT;t+=step) ticks += (t + (t<maxT? ' | ':''));
+  ruler.innerText = 'Time ticks: ' + ticks;
+  container.appendChild(ruler);
+}
+</script>
+</body>
+</html>
